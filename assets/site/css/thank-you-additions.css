@@ -1,0 +1,98 @@
+/*
+ * /thank-you additions approved by Nik (2026-11-07): "Important" in the heading, the Step 1 label above
+ * the video, and the Step 2 block with two case-study articles below it. Everything else on the page is
+ * the exact Framer copy. Uses the page's own fonts (Inter, Hanken Grotesk), colour tokens and card style,
+ * sized to the video's 800px column. Breakpoints match the site: >=1440, 1200-1439, 810-1199, <=809.
+ */
+
+/* Step 1 / Step 2 headings */
+.bl-ty-step {
+  flex: none;
+  width: 100%;
+  max-width: 800px;
+  margin: 14px 0 6px;
+  font-family: "Inter", "Inter Placeholder", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--token-c5600faa-4912-4ab8-8b21-308f9dab966b, rgb(1, 8, 26));
+}
+
+/* Step 2 block below the video */
+.bl-ty-topics {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 30px;
+}
+.bl-ty-topics .bl-ty-step {
+  margin: 0;
+}
+.bl-ty-subline {
+  margin: 8px 0 0;
+  font-family: "Hanken Grotesk", "Hanken Grotesk Placeholder", sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--token-b27e52ef-1d1d-4c93-911c-df291a99884d, rgb(82, 82, 82));
+}
+
+/* Article cards (same card language as the site: white, 16px radius, soft shadow) */
+.bl-ty-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+}
+.bl-ty-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  background-color: var(--token-12167a94-dd84-410e-822f-45fecf47bf50, rgb(255, 255, 255));
+  border: 1px solid var(--token-b59961ac-bb9c-4d3e-873f-758921c03a4b, rgb(230, 230, 230));
+  border-radius: 16px;
+  box-shadow: 0px 1px 28px 4px rgba(0, 0, 0, 0.04);
+  font-family: "Hanken Grotesk", "Hanken Grotesk Placeholder", sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-align: left;
+  text-decoration: none;
+  color: var(--token-c5600faa-4912-4ab8-8b21-308f9dab966b, rgb(1, 8, 26));
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.bl-ty-link svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--token-79ef3b18-07f2-414b-866d-8cb9b99a993e, rgb(10, 92, 235));
+}
+.bl-ty-link:hover,
+.bl-ty-link:focus-visible {
+  border-color: var(--token-79ef3b18-07f2-414b-866d-8cb9b99a993e, rgb(10, 92, 235));
+  color: var(--token-79ef3b18-07f2-414b-866d-8cb9b99a993e, rgb(10, 92, 235));
+}
+
+/* Tablet: 810-1199 */
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .bl-ty-step { font-size: 20px; }
+}
+
+/* Phone: 0-809 */
+@media (max-width: 809.98px) {
+  .bl-ty-step { font-size: 18px; margin: 10px 0 4px; }
+  .bl-ty-topics { margin-top: 24px; }
+  .bl-ty-subline { font-size: 15px; }
+  .bl-ty-links { gap: 10px; margin-top: 16px; }
+  .bl-ty-link { padding: 14px 16px; font-size: 15px; border-radius: 12px; }
+}
