@@ -399,3 +399,23 @@ html.lenis { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* ---- Calendly box (13 Nov 2026) ----
+   Clean white card instead of the grey padded frame; its height follows Calendly (no scroll inside).
+   Calendly shows details-left / calendar-right only when its frame is >= 1120px wide (measured: 1119
+   stacks, 1120 side-by-side), so from 1200px screens the card is 1122px (1120 + borders) and may extend
+   into the section's side padding; it stays centred. Narrower screens get the stacked layout. */
+.framer-O1n7B .framer-11q1fio { background-color:#fff; border:1px solid rgba(0,0,0,.1); border-radius:18px; padding:0; max-width:840px; }
+.framer-O1n7B .framer-fch4fr-container { flex:1 0 auto; width:100%; height:auto; }
+.framer-O1n7B .bl-cal { width:100%; height:1134px; }
+@media (min-width:1200px) {
+  .framer-O1n7B .framer-11q1fio { width:1122px; max-width:none; flex:none; }
+  .framer-O1n7B .bl-cal { height:700px; }
+}
+@media (min-width:810px) and (max-width:1199.98px) {
+  .framer-O1n7B .framer-fch4fr-container { height:auto; }
+}
+@media (max-width:809.98px) {
+  .framer-O1n7B .framer-11q1fio { border-radius:16px; }
+  .framer-O1n7B .framer-fch4fr-container { height:auto; }
+}

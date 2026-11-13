@@ -71,14 +71,9 @@
         </div>
         <div class="framer-11q1fio">
           <div class="framer-fch4fr-container">
-            <!-- shown at: 1440+px, 1200–1439px, 810–1199px -->
-            <div class="ssr-variant hidden-7uuipw">
-              <iframe src="https://calendly.com/brandslane/scaling-discovery-edt" style="width:100%;height:100%;border:none;zoom:1;border-radius:16px;transform-origin:top center" loading="lazy" fetchpriority="auto" referrerpolicy="no-referrer" sandbox="allow-same-origin allow-scripts allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" allowfullscreen allow="presentation; fullscreen; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; clipboard-write"></iframe>
-            </div>
-            <!-- shown at: 0–809px -->
-            <div class="ssr-variant hidden-1ajth5d hidden-1fk5utd hidden-nbdvor">
-              <iframe src="https://calendly.com/brandslane/scaling-discovery-edt" style="width:100%;height:100%;border:none;zoom:1;border-radius:12px;transform-origin:top center" loading="lazy" fetchpriority="auto" referrerpolicy="no-referrer" sandbox="allow-same-origin allow-scripts allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" allowfullscreen allow="presentation; fullscreen; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; clipboard-write"></iframe>
-            </div>
+            <!-- One Calendly embed for every screen size. Its height follows Calendly's own height reports
+                 (script at the end of the page), so the box never scrolls inside. -->
+            <div class="calendly-inline-widget bl-cal" data-url="https://calendly.com/brandslane/scaling-discovery-edt" style="min-width:320px;"></div>
           </div>
         </div>
       </div>
@@ -474,5 +469,31 @@
   <script src="/assets/site/js/vendor/motion-12.23.24.min.js"></script>
   <script src="/assets/site/js/slideshow.js"></script>
   <script src="/assets/site/js/site.js"></script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+/* Calendly box takes the full height of each step (calendar, times, form), so only the page scrolls.
+   Calendly's first two reports (26px, 2px) arrive before it renders, so heights under 400px are ignored.
+   When Calendly swaps to a shorter screen (phone time list, form), the box top is brought back into view. */
+(function(){
+  var lastH = 0, timer;
+  function showTop(box){
+    var top = box.getBoundingClientRect().top, offset = 96;
+    if (top < offset) window.scrollTo({ top: window.scrollY + top - offset, behavior: 'smooth' });
+  }
+  window.addEventListener('message', function(e){
+    var box = document.querySelector('.bl-cal');
+    if (!box || e.origin !== 'https://calendly.com' || !e.data || typeof e.data.event !== 'string') return;
+    if (e.data.event === 'calendly.page_height') {
+      var h = parseInt(e.data.payload && e.data.payload.height, 10);
+      if (!(h >= 400)) return;
+      box.style.height = h + 'px';
+      clearTimeout(timer);
+      timer = setTimeout(function(){ if (lastH && h < lastH) showTop(box); lastH = h; }, 250);
+    } else if (e.data.event === 'calendly.date_and_time_selected') {
+      showTop(box);
+    }
+  });
+})();
+</script>
 </body>
 </html>
