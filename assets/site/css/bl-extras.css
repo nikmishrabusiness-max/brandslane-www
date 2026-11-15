@@ -1,0 +1,97 @@
+/* =========================================================================
+   Brandslane additions on top of the Framer rebuild (16 Nov 2026)
+   Mirrors what hello.brandslane.co got: Portfolio menu, drifting dots behind
+   the hero + creatives strip, wider content, smaller carousel cards.
+   The Logos section (.framer-1poh6kn / .framer-l2kenb) is deliberately untouched.
+   ========================================================================= */
+
+/* ---------- Portfolio dropdown in the header ---------- */
+.bl-dd { position: relative; display: flex; align-items: center; }
+.bl-dd-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: "Hanken Grotesk", "Hanken Grotesk Placeholder", sans-serif; font-size: 16px; font-weight: 400;
+  letter-spacing: -0.3px; line-height: 1.2; color: #000; white-space: nowrap; transition: opacity .2s ease;
+}
+.bl-dd-btn svg { transition: transform .2s ease; }
+.bl-dd.open .bl-dd-btn svg { transform: rotate(180deg); }
+.bl-dd-menu {
+  position: absolute; top: calc(100% + 14px); left: 50%; min-width: 172px; padding: 6px;
+  display: flex; flex-direction: column; background: #fff; border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(1, 8, 26, .06), 0 14px 36px -12px rgba(1, 8, 26, .22);
+  opacity: 0; visibility: hidden; transform: translate(-50%, -4px);
+  transition: opacity .15s ease, transform .15s ease, visibility 0s linear .15s; z-index: 20;
+}
+.bl-dd-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px; } /* hover bridge */
+.bl-dd-menu a {
+  font-family: "Hanken Grotesk", "Hanken Grotesk Placeholder", sans-serif; font-size: 15px; letter-spacing: -0.2px;
+  color: rgb(1, 8, 26); text-decoration: none; padding: 10px 12px; border-radius: 9px;
+}
+.bl-dd-menu a:hover { background: #f5f5f7; color: rgb(10, 92, 235); }
+.bl-dd.open .bl-dd-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .15s ease, transform .15s ease, visibility 0s; }
+@media (hover: hover) and (min-width: 810px) {
+  .bl-dd:not(.suppress):hover .bl-dd-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .15s ease, transform .15s ease, visibility 0s; }
+  .bl-dd-btn:hover { opacity: .7; }
+}
+/* Phone menu (site.js clones the desktop menu into the open phone header): show the two links inline */
+@media (max-width: 809.98px) {
+  .bl-dd { flex-direction: column; align-items: center; }
+  .bl-dd-btn { display: none; }
+  .bl-dd-menu { position: static; transform: none; opacity: 1; visibility: visible; transition: none; min-width: 0; padding: 0; background: none; box-shadow: none; gap: 22px; align-items: center; text-align: center; }
+  .bl-dd-menu::before { content: "Portfolio"; position: static; height: auto; margin-bottom: -6px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(1, 8, 26, .5); }
+  .bl-dd-menu a { padding: 0; font-size: 16px; color: #000; }
+  .bl-dd-menu a:hover { background: none; }
+}
+
+/* ---------- Drifting dots behind the hero + the creatives strip ---------- */
+.bl-dots { position: absolute; left: 0; top: 0; width: 100%; height: 0; z-index: 0; pointer-events: none; }
+html .framer-6MOzy .framer-1o6xgjv, html .framer-6MOzy .framer-wfuvfg { z-index: 1; }
+
+/* ---------- Wider content: the sections capped at 1200px now share the 1440px edge
+   the hero, results, case studies and services already use (Logos stays as it was) ---------- */
+html .framer-6MOzy .framer-18o8l5o,   /* creatives strip after the hero */
+html .framer-6MOzy .framer-pvb3xg,    /* Built for DTC */
+html .framer-6MOzy .framer-8zoytp {   /* Who it's for */
+  max-width: 1440px;
+}
+
+/* ---------- Smaller carousel cards (slide + carousel scaled by f; the card itself is
+   zoomed by f so its text, image and padding shrink together and nothing gets cramped) ----------
+   Case studies f = .83 · Paid Ads f = .88 · Performance Creatives f = .75 */
+.framer-14y1lm9-container li > [class$="-container"] > * { zoom: .83; }
+.framer-1qcpkqo-container li > [class$="-container"] > * { zoom: .88; }
+.framer-186z093-container li > [class$="-container"] > * { zoom: .75; }
+
+@media (min-width: 1200px) {
+  .framer-14y1lm9-container li > [class$="-container"] { width: calc((35.714285714285715% - 15.428571428571429px) * .83) !important; }
+  .framer-1qcpkqo-container li > [class$="-container"] { width: calc((35.714285714285715% - 15.428571428571429px) * .88) !important; }
+  .framer-186z093-container li > [class$="-container"] { width: calc((35.714285714285715% - 15.428571428571429px) * .75) !important; }
+}
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .framer-14y1lm9-container li > [class$="-container"] { width: calc((50% - 12px) * .83) !important; }
+  .framer-1qcpkqo-container li > [class$="-container"] { width: calc((50% - 12px) * .88) !important; }
+  .framer-186z093-container li > [class$="-container"] { width: calc((50% - 12px) * .75) !important; }
+}
+@media (max-width: 809.98px) {
+  .framer-14y1lm9-container li > [class$="-container"] { width: 83% !important; }
+  .framer-1qcpkqo-container li > [class$="-container"] { width: 88% !important; }
+  .framer-186z093-container li > [class$="-container"] { width: 75% !important; }
+}
+/* carousel heights × f, per breakpoint (base values from index.css) */
+html .framer-6MOzy .framer-14y1lm9-container { height: 515px; }   /* 620 */
+html .framer-6MOzy .framer-1qcpkqo-container { height: 454px; }   /* 516 */
+html .framer-6MOzy .framer-186z093-container { height: 570px; }   /* 760 */
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  html .framer-6MOzy .framer-14y1lm9-container { height: 548px; } /* 660 */
+  html .framer-6MOzy .framer-1qcpkqo-container { height: 440px; } /* 500 */
+  html .framer-6MOzy .framer-186z093-container { height: 473px; } /* 630 */
+}
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  html .framer-6MOzy .framer-14y1lm9-container { height: 498px; } /* 600 */
+  html .framer-6MOzy .framer-1qcpkqo-container { height: 431px; } /* 490 */
+  html .framer-6MOzy .framer-186z093-container { height: 443px; } /* 590 */
+}
+@media (max-width: 809.98px) {
+  html .framer-6MOzy .framer-14y1lm9-container { height: 481px; } /* 580 */
+  html .framer-6MOzy .framer-1qcpkqo-container { height: 431px; } /* 490 */
+  html .framer-6MOzy .framer-186z093-container { height: 435px; } /* 580 */
+}
